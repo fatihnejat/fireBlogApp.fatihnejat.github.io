@@ -1,5 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
@@ -18,15 +24,34 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 
-export const createUser = async (registerMail,registerPassword) => {
+export const createUser = async (registerMail, registerPassword) => {
   try {
     const user = await createUserWithEmailAndPassword(
       auth,
       registerMail,
       registerPassword
     );
-    console.log(user)
+    console.log(user);
   } catch (error) {
     alert("error");
   }
 };
+
+export const LoginUser = async (email, password) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    alert("error");
+  }
+};
+
+
+export const googleRegister = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider);
+  } catch (error) {
+    alert("error");
+  }
+};
+

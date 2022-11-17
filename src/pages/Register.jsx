@@ -2,13 +2,20 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import { createUser } from "../helpers/firebase";
+import { createUser, googleRegister } from "../helpers/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [registerMail, setRegisterMail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const navigate = useNavigate();
   const handleSubmit = () => {
-    createUser(registerMail,registerPassword)
+    createUser(registerMail, registerPassword);
+    navigate("/");
+  };
+  const handleGoogleSubmit = () => {
+    googleRegister();
+    navigate("/")
   };
 
   return (
@@ -46,12 +53,21 @@ const Register = () => {
         sx={{ width: "450px" }}
         onChange={(e) => setRegisterPassword(e.target.value)}
       />
-      <Button size="large" variant="contained" onClick={handleSubmit} sx={{ width: "250px" }}>
+      <Button
+        size="large"
+        variant="contained"
+        onClick={handleSubmit}
+        sx={{ width: "250px" }}
+      >
         Register
       </Button>
-      <Button  variant="contained"  sx={{ width: "250px", marginTop: "1rem" }}>
-         With Google
-        <img width= "50px" src="https://cdn.mos.cms.futurecdn.net/rjqJEKv6P9Yjy9d3KMGvp8.jpg" alt="" />
+      <Button onClick={handleGoogleSubmit} variant="contained" sx={{ width: "250px", marginTop: "1rem" }}>
+        With Google
+        <img
+          width="50px"
+          src="https://cdn.mos.cms.futurecdn.net/rjqJEKv6P9Yjy9d3KMGvp8.jpg"
+          alt=""
+        />
       </Button>
     </Box>
   );

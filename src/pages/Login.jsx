@@ -2,12 +2,21 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { googleRegister, LoginUser } from "../helpers/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
   const handleSubmit = () => {
-    console.log(email, password);
+    LoginUser(email,password)
+    navigate("/")
+  };
+  const handleGoogleSubmit = () => {
+    googleRegister();
+    navigate("/")
   };
   return (
     <Box
@@ -47,7 +56,7 @@ const Login = () => {
       <Button  variant="contained" onClick={handleSubmit}  sx={{ width: "250px" }}> 
         Log in
       </Button>
-      <Button  variant="contained"  sx={{ width: "250px", marginTop: "1rem" }}>
+      <Button onClick={handleGoogleSubmit} variant="contained"  sx={{ width: "250px", marginTop: "1rem" }}>
          With Google
         <img width= "50px" src="https://cdn.mos.cms.futurecdn.net/rjqJEKv6P9Yjy9d3KMGvp8.jpg" alt="" />
       </Button>

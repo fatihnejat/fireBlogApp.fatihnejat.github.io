@@ -12,10 +12,10 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
-
+import { logOut } from "../helpers/firebase";
+import { LoginContext } from "../context/LoginContextProvider";
 
 const pages = ["Home"];
-
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -35,6 +35,7 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const { currentUser } = React.useContext(LoginContext);
 
   return (
     <AppBar position="static" sx={{ background: "#eceff1", color: "black" }}>
@@ -133,9 +134,21 @@ function ResponsiveAppBar() {
                 onClick={handleCloseUserMenu}
                 sx={{ display: "flex", flexDirection: "column" }}
               >
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
-
+                {!currentUser ? (
+                  <>
+                    {" "}
+                    <Link to="/login">Login</Link>
+                    <Link to="/register">Register</Link>
+                    
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <span onClick={() => logOut()}> Logout</span>
+                    <Link to="/newpost">New Post</Link>{" "}
+                    
+                  </>
+                )}
               </MenuItem>
             </Menu>
           </Box>

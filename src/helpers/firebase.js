@@ -2,8 +2,10 @@ import { initializeApp } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
 
@@ -45,7 +47,6 @@ export const LoginUser = async (email, password) => {
   }
 };
 
-
 export const googleRegister = async () => {
   try {
     const provider = new GoogleAuthProvider();
@@ -55,3 +56,17 @@ export const googleRegister = async () => {
   }
 };
 
+export const userObserver = (setCurrentUser) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const { email } = user;
+      setCurrentUser({ email });
+    } else {
+      console.log("user sign out");
+    }
+  });
+};
+
+export const logOut = () => {
+  signOut(auth);
+};

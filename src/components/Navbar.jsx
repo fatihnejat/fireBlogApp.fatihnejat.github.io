@@ -136,16 +136,16 @@ function ResponsiveAppBar() {
               >
                 {!currentUser ? (
                   <>
-                    {" "}
+                    
                     <Link to="/login">Login</Link>
                     <Link to="/register">Register</Link>
                     
                   </>
                 ) : (
                   <>
-                    {" "}
+                    
                     <span onClick={() => logOut()}> Logout</span>
-                    <Link to="/newpost">New Post</Link>{" "}
+                    <Link to="/newpost">New Post</Link>
                     
                   </>
                 )}

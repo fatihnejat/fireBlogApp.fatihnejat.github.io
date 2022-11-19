@@ -6,14 +6,16 @@ import { createUser, googleRegister } from "../helpers/firebase";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [registerMail, setRegisterMail] = useState("");
+  const [registerMail, setRegisterMail] = useState("");    //! 1. önce use state
   const [registerPassword, setRegisterPassword] = useState("");
+
   const navigate = useNavigate();
+
   const handleSubmit = () => {
-    createUser(registerMail, registerPassword);
+    createUser(registerMail, registerPassword); //! 4- firebase kısmına geldik oraya git gel
     navigate("/");
   };
-  const handleGoogleSubmit = () => {
+  const handleGoogleSubmit = () => { //!5- google ile giriş firebase kısmına git gel
     googleRegister();
     navigate("/")
   };
@@ -43,7 +45,7 @@ const Register = () => {
         variant="outlined"
         margin="normal"
         sx={{ width: "450px" }}
-        onChange={(e) => setRegisterMail(e.target.value)}
+        onChange={(e) => setRegisterMail(e.target.value)} //! 2- onchange tanımla
       />
       <TextField
         id="password"
@@ -56,7 +58,7 @@ const Register = () => {
       <Button
         size="large"
         variant="contained"
-        onClick={handleSubmit}
+        onClick={handleSubmit} //! 3- butona click 
         sx={{ width: "250px" }}
       >
         Register

@@ -1,23 +1,22 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, TextareaAutosize } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { useContext } from "react";
-import { LoginContext } from "../context/LoginContextProvider";
-import { createPost } from "../helpers/functions";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { EditPost } from "../helpers/functions";
 
-const NewPost = () => {
-  const { info, setInfo,currentUser } = useContext(LoginContext);
-
-  console.log(info);
-
+const UpdatePost = () => {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const [editInfo, setEditInfo] = useState(state);
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setInfo({ ...info, [name]: value });
+    setEditInfo({ ...editInfo, [name]: value });
   };
-  const handleCreate = () => {
-    createPost(info,currentUser)
-  }
-
+  const handleEdit = () => {
+    EditPost(editInfo);
+    navigate("/");
+  };
   return (
     <Box
       sx={{
@@ -37,30 +36,29 @@ const NewPost = () => {
         src="https://img.freepik.com/free-vector/add-files-concept-illustration_114360-341.jpg?w=740&t=st=1668774252~exp=1668774852~hmac=5bc77556396d41bb1ca82647cb8dc512c1ed81633eef2c808c35de2e42e679b8"
         alt=""
       />
-
       <TextField
         id="outlined-basic"
-        label="New Post Title *"
+        // label="New Post Title *"
         variant="outlined"
         margin="normal"
         sx={{ width: "400px" }}
+        value={editInfo.title}
         name="title"
         onChange={handleChange}
-        value={info.title}
       />
       <TextField
         id="outlined-basic"
-        label="Image URL *"
+        // label="Image URL *"
         variant="outlined"
         margin="normal"
         sx={{ width: "400px" }}
+        value={editInfo.imgUrl}
         name="imgUrl"
         onChange={handleChange}
-        value={info.imgUrl}
       />
       <TextField
         id="outlined-basic"
-        label="Content *"
+        // label="Content *"
         variant="outlined"
         margin="normal"
         sx={{
@@ -69,15 +67,15 @@ const NewPost = () => {
             height: "200px",
           },
         }}
+        value={editInfo.content}
         name="content"
         onChange={handleChange}
-        value={info.content}
       />
-      <Button onClick={handleCreate} sx={{ width: "400px" }} variant="contained">
-        Submit
+      <Button onClick={handleEdit} sx={{ width: "400px" }} variant="contained">
+        Edit
       </Button>
     </Box>
   );
 };
 
-export default NewPost;
+export default UpdatePost;

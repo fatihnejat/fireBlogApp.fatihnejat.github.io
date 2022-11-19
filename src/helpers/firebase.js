@@ -27,7 +27,7 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 
-export const createUser = async (registerMail, registerPassword) => {
+export const createUser = async (registerMail, registerPassword) => { //! 1- create user kısmı
   try {
     const user = await createUserWithEmailAndPassword(
       auth,
@@ -40,7 +40,7 @@ export const createUser = async (registerMail, registerPassword) => {
   }
 };
 
-export const LoginUser = async (email, password) => {
+export const LoginUser = async (email, password) => { //! 2- login ısmı
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
@@ -48,7 +48,7 @@ export const LoginUser = async (email, password) => {
   }
 };
 
-export const googleRegister = async () => {
+export const googleRegister = async () => {  //! 3- google kısmı
   try {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider);
@@ -57,9 +57,9 @@ export const googleRegister = async () => {
   }
 };
 
-export const userObserver = (setCurrentUser) => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
+export const userObserver = (setCurrentUser) => {  //! 4- burada login olup olmadığını kontrol edecek bu bilgi
+  onAuthStateChanged(auth, (user) => {                 //! bize farklı yerlerde lazım olacağı için context yapısı 
+    if (user) {                                        
       const { email } = user;
       setCurrentUser({ email });
     } else {
